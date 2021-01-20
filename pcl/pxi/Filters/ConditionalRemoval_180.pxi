@@ -19,7 +19,8 @@ cdef class ConditionalRemoval:
     def __cinit__(self, ConditionAnd cond):
         # self.me = new pcl_fil.ConditionalRemoval_t(<pcl_fil.ConditionBase_t*>cond.me)
         # direct - NG
-        self.me = new pcl_fil.ConditionalRemoval_t(<pcl_fil.ConditionBasePtr_t>cond.me)
+        self.me = new pcl_fil.ConditionalRemoval_t()
+        self.me.setCondition(<pcl_fil.ConditionBasePtr_t>cond.me)
 
     # def __dealloc__(self):
     #    # MemoryAccessError

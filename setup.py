@@ -640,7 +640,7 @@ else:
         os.environ['ARCHFLAGS'] = ''
 
     # Try to find PCL. XXX we should only do this when trying to build or install.
-    PCL_SUPPORTED = ["-1.9", "-1.8", "-1.7", "-1.6", ""]    # in order of preference
+    PCL_SUPPORTED = ["-1.10", "-1.9", "-1.8", "-1.7", "-1.6", ""]    # in order of preference
 
     for pcl_version in PCL_SUPPORTED:
         if subprocess.call(['pkg-config', 'pcl_common%s' % pcl_version]) == 0:
@@ -732,6 +732,10 @@ else:
             # pcl 1.9.1
             # build install?
             vtk_version = '8.1'
+            vtk_include_dir = os.path.join('/usr/include/vtk-' + vtk_version)
+            vtk_library_dir = os.path.join('/usr/lib')
+        elif pcl_version == '-1.10':
+            vtk_version = '7.1'
             vtk_include_dir = os.path.join('/usr/include/vtk-' + vtk_version)
             vtk_library_dir = os.path.join('/usr/lib')
         else:
@@ -858,6 +862,14 @@ else:
                   # gdb_debug=True,
                   ]
     elif pcl_version == '-1.9':
+        module = [Extension("pcl._pcl", ["pcl/_pcl_190.pyx", "pcl/minipcl.cpp", "pcl/ProjectInliers.cpp"], language="c++", **ext_args),
+                  Extension("pcl.pcl_visualization", ["pcl/pcl_visualization.pyx"], language="c++", **ext_args),
+                  # Extension("pcl.pcl_grabber", ["pcl/pcl_grabber.pyx", "pcl/grabber_callback.cpp"], language="c++", **ext_args),
+                  # debug
+                  # gdb_debug=True,
+                  ]
+    elif pcl_version == '-1.10':
+        ext_args['extra_compile_args'] = ['-std=c++14']
         module = [Extension("pcl._pcl", ["pcl/_pcl_190.pyx", "pcl/minipcl.cpp", "pcl/ProjectInliers.cpp"], language="c++", **ext_args),
                   Extension("pcl.pcl_visualization", ["pcl/pcl_visualization.pyx"], language="c++", **ext_args),
                   # Extension("pcl.pcl_grabber", ["pcl/pcl_grabber.pyx", "pcl/grabber_callback.cpp"], language="c++", **ext_args),

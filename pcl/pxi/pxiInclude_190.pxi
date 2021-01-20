@@ -29,8 +29,7 @@ include "Filters/CropBox_180.pxi"
 include "Filters/ProjectInliers_180.pxi"
 include "Filters/RadiusOutlierRemoval_180.pxi"
 include "Filters/ConditionAnd_180.pxi"
-# build error
-# include "Filters/ConditionalRemoval_180.pxi"
+include "Filters/ConditionalRemoval_180.pxi"
 # Surface
 include "Surface/ConcaveHull_180.pxi"
 include "Surface/MovingLeastSquares_180.pxi"
